@@ -6,12 +6,17 @@ import { HttpService } from '@nestjs/axios';
 export class AppService {
   constructor(private readonly httpService: HttpService) {}
   async getRandomNumber(): Promise<number[]> {
-    const response = await firstValueFrom(
-      this.httpService.get<number[]>(
-        'https://www.randomnumberapi.com/api/v1.0/random',
-      ),
-    );
-    console.log(response.data);
-    return response.data;
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get<number[]>(
+          'https://www.randomnumberapi.com/api/v1.0/random',
+        ),
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
   }
 }
